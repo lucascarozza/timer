@@ -15,13 +15,13 @@ export function Home() {
     <HomeContainer>
       <form>
         <FormContainer>
-          <label htmlFor="task">Vou trabalhar em</label>
+          <label htmlFor="task">Eu vou </label>
           <TaskInput
             type="text"
             id="task"
             list="task-suggestions"
             onFocus={(e) => e.target.setAttribute("list", "task-suggestions")}
-            placeholder="Dê um nome para o seu projeto"
+            placeholder="dê um nome para a sua tarefa"
           />
           <datalist id="task-suggestions">
             <option value="banana" />
