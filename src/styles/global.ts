@@ -5,7 +5,6 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    cursor: default;
   }
 
   :focus {
@@ -25,10 +24,15 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   a, button {
+    color: ${(props) => props.theme["gray-300"]};
     cursor: pointer;
   }
 
   input, text-area {
     cursor: text;
+  }
+
+  ul, ol {
+    list-style: none;
   }
 `;
