@@ -27,5 +27,9 @@ export const NavigationItem = styled.li`
     justify-content: center;
     width: 100%;
     height: 100%;
+
+    &.active {
+    color: ${(props) => props.theme["green-500"]};
+  }
   }
 `;
