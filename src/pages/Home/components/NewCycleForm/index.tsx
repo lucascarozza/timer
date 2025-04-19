@@ -2,7 +2,7 @@
 import { useContext } from "react";
 import { useFormContext } from "react-hook-form";
 // Context providers
-import { CyclesContext } from "../..";
+import { CyclesContext } from "../../../../contexts/CyclesContext";
 // Styled components
 import { FormContainer, TaskInput, MinutesInput } from "./styles";
 

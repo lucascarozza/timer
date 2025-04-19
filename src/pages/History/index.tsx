@@ -1,9 +1,18 @@
+// External libraries
+import { useContext } from "react";
+// Context providers
+import { CyclesContext } from "../../contexts/CyclesContext";
+// Styled components
 import { HistoryContainer, Status, TableContainer } from "./styles";
 
 export function History() {
+  const { cycles } = useContext(CyclesContext);
+
   return (
     <HistoryContainer>
       <h1>Meu Histórico</h1>
+
+      <pre>{JSON.stringify(cycles, null, 2)}</pre>
 
       <TableContainer>
         <table>

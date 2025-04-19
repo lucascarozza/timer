@@ -2,7 +2,7 @@
 import { useContext, useEffect } from "react";
 import { differenceInSeconds } from "date-fns";
 // Context providers
-import { CyclesContext } from "../..";
+import { CyclesContext } from "../../../../contexts/CyclesContext";
 // Styled components
 import { Colon, CountdownContainer } from "./styles";
 
@@ -12,7 +12,7 @@ export function Countdown() {
     activeCycleId,
     timeElapsedInSeconds,
     endCurrentCycle,
-    setTimeElapsedInSecondsFn,
+    setElapsedSeconds,
   } = useContext(CyclesContext);
 
   const totalTimeInSeconds = activeCycle ? activeCycle.minutes * 60 : 0;
@@ -31,10 +31,10 @@ export function Countdown() {
 
         if (newDate >= totalTimeInSeconds) {
           endCurrentCycle();
-          setTimeElapsedInSecondsFn(totalTimeInSeconds);
+          setElapsedSeconds(totalTimeInSeconds);
           clearInterval(interval);
         } else {
-          setTimeElapsedInSecondsFn(newDate);
+          setElapsedSeconds(newDate);
         }
       }, 1000);
 
@@ -45,7 +45,7 @@ export function Countdown() {
     activeCycleId,
     totalTimeInSeconds,
     endCurrentCycle,
-    setTimeElapsedInSecondsFn,
+    setElapsedSeconds,
   ]);
 
   useEffect(() => {
