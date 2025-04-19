@@ -51,6 +51,8 @@ const baseInput = styled.input`
   &::placeholder {
     color: ${(props) => props.theme["gray-500"]};
   }
+
+  
 `;
 
 export const TaskInput = styled(baseInput)`
