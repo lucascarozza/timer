@@ -18,7 +18,7 @@ export const NavigationItem = styled.li`
   border-bottom: 3px solid transparent;
 
   &:hover {
-    border-bottom: 3px solid ${(props) => props.theme["green-500"]};
+    border-bottom: 3px solid ${(props) => props.theme["blue-500"]};
   }
 
   a {
@@ -29,7 +29,7 @@ export const NavigationItem = styled.li`
     height: 100%;
 
     &.active {
-    color: ${(props) => props.theme["green-500"]};
+    color: ${(props) => props.theme["blue-500"]};
   }
   }
 `;

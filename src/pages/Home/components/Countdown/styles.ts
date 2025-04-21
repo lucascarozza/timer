@@ -25,5 +25,5 @@ export const Colon = styled.div`
   padding-right: 0.8rem;
   overflow: hidden;
 
-  color: ${(props) => props.theme["green-500"]};
+  color: ${(props) => props.theme["blue-500"]};
 `;

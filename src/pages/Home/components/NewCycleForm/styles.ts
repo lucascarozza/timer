@@ -29,7 +29,7 @@ const baseInput = styled.input`
 
   &:not(:disabled):focus {
     box-shadow: none;
-    border-bottom: 2px solid ${(props) => props.theme["green-500"]};
+    border-bottom: 2px solid ${(props) => props.theme["blue-500"]};
   }
 
   &:disabled {

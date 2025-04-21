@@ -5,11 +5,12 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    color: ${(props) => props.theme.white}
   }
 
   :focus {
     outline: 0;
-    box-shadow: 0 0 0 2px ${(props) => props.theme["green-500"]};
+    box-shadow: 0 0 0 2px ${(props) => props.theme["blue-500"]};
   }
 
   body {
