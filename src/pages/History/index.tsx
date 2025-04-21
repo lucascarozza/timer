@@ -26,8 +26,8 @@ export function History() {
           </thead>
 
           <tbody>
-            {cycles.map((cycle) => {
-              return (
+            {cycles.length > 0 ? (
+              cycles.slice().reverse().map((cycle) => (
                 <tr key={cycle.id}>
                   <td>{cycle.task}</td>
                   <td>{cycle.minutes} minutos</td>
@@ -54,8 +54,12 @@ export function History() {
                     })()}
                   </td>
                 </tr>
-              );
-            })}
+              ))
+            ) : (
+              <tr>
+                <td colSpan={4}>Não há ciclos para exibir ainda.</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </TableContainer>

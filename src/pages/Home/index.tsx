@@ -4,6 +4,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { X, Play } from "lucide-react";
+
 // Internal utilities
 import { NewCycleForm } from "./components/NewCycleForm";
 import { Countdown } from "./components/Countdown";
@@ -14,6 +15,7 @@ import {
   HomeContainer,
   StartCountdownButton,
   StopCountdownButton,
+  TaskName,
 } from "./styles";
 
 const newCycleFormValidationSchema = z.object({
@@ -39,8 +41,8 @@ export function Home() {
 
   const {
     handleSubmit,
-    watch,
     reset,
+    watch,
     formState: { isSubmitting },
   } = newCycleForm;
 
@@ -56,15 +58,21 @@ export function Home() {
   return (
     <HomeContainer>
       <form onSubmit={handleSubmit(handleCreateNewCycle)}>
-        <FormProvider {...newCycleForm}>
-          <NewCycleForm />
-        </FormProvider>
+        {activeCycle ? (
+          <TaskName>
+            "Eu vou {activeCycle.task} durante {activeCycle.minutes} minutos."
+          </TaskName>
+        ) : (
+          <FormProvider {...newCycleForm}>
+            <NewCycleForm />
+          </FormProvider>
+        )}
         <Countdown />
 
         {!activeCycle ? (
           <StartCountdownButton
-            disabled={isStartCountdownDisabled}
             type="submit"
+            disabled={isStartCountdownDisabled}
           >
             <Play size={24} /> Começar
           </StartCountdownButton>

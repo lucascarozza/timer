@@ -16,6 +16,19 @@ export const HomeContainer = styled.main`
   }
 `;
 
+export const TaskName = styled.p`
+display: flex;
+justify-content: center;
+align-items: center;
+
+height: 2.5rem;
+width: 100%;
+
+font-size: 1.125rem;
+font-weight: bold;
+font-style: italic;
+`
+
 export const baseCountdownButton = styled.button`
   display: flex;
   align-items: center;
