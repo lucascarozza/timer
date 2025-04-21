@@ -1,13 +1,19 @@
-import { createContext, ReactNode, useState } from "react";
-
-interface Cycle {
-  id: string;
-  task: string;
-  minutes: number;
-  startDate: Date;
-  interruptionDate?: Date;
-  conclusionDate?: Date;
-}
+// External libraries
+import {
+  createContext,
+  ReactNode,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
+// Reducers
+import { Cycle, cyclesReducer } from "../reducers/cycles/reducer";
+import {
+  createNewCycleAction,
+  endCurrentCycleAction,
+  interruptCurrentCycleAction,
+} from "../reducers/cycles/actions";
+import { differenceInSeconds } from "date-fns";
 
 interface CreateNewCycleState {
   task: string;
@@ -35,49 +41,54 @@ interface CyclesContextProviderProps {
 export function CyclesContextProvider({
   children,
 }: CyclesContextProviderProps) {
-  const [cycles, setCycles] = useState<Cycle[]>([]);
-  const [activeCycleId, setActiveCycleId] = useState<string | null>(null);
-  const [timeElapsedInSeconds, setTimeElapsedInSeconds] = useState(5);
+  const [cyclesState, dispatch] = useReducer(
+    cyclesReducer,
+    { cycles: [], activeCycleId: null },
+    (initialState) => {
+      const storedState = localStorage.getItem("@timer:cycles-state-1.0.0");
+      if (storedState) {
+        return JSON.parse(storedState);
+      }
+      return initialState;
+    }
+  );
 
+  const { cycles, activeCycleId } = cyclesState;
   const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId);
+
+  const [timeElapsedInSeconds, setTimeElapsedInSeconds] = useState(() => {
+    if (activeCycle) {
+      return differenceInSeconds(new Date(), new Date(activeCycle.startDate));
+    }
+
+    return 5;
+  });
+
+  useEffect(() => {
+    localStorage.setItem(
+      "@timer:cycles-state-1.0.0",
+      JSON.stringify(cyclesState)
+    );
+  }, [cyclesState]);
 
   function setElapsedSeconds(seconds: number) {
     setTimeElapsedInSeconds(seconds);
   }
 
-  function endCurrentCycle() {
-    setCycles((prevCycles) =>
-      prevCycles.map((cycle) =>
-        cycle.id === activeCycleId
-          ? { ...cycle, conclusionDate: new Date() }
-          : cycle
-      )
-    );
-  }
-
   function createNewCycle({ task, minutes }: CreateNewCycleState) {
     const id = `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
-    const newCycle: Cycle = {
-      id,
-      task,
-      minutes,
-      startDate: new Date(),
-    };
+    const newCycle: Cycle = { id, task, minutes, startDate: new Date() };
 
-    setCycles((prevCycles) => [...prevCycles, newCycle]);
-    setActiveCycleId(id);
+    dispatch(createNewCycleAction(newCycle));
     setTimeElapsedInSeconds(0);
   }
 
   function interruptCurrentCycle() {
-    setCycles((prevCycles) =>
-      prevCycles.map((cycle) =>
-        cycle.id === activeCycleId
-          ? { ...cycle, interruptionDate: new Date() }
-          : cycle
-      )
-    );
-    setActiveCycleId(null);
+    dispatch(interruptCurrentCycleAction());
+  }
+
+  function endCurrentCycle() {
+    dispatch(endCurrentCycleAction());
   }
 
   return (

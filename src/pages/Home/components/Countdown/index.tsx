@@ -27,7 +27,10 @@ export function Countdown() {
   useEffect(() => {
     if (activeCycle) {
       const interval = setInterval(() => {
-        const newDate = differenceInSeconds(new Date(), activeCycle.startDate);
+        const newDate = differenceInSeconds(
+          new Date(),
+          new Date(activeCycle.startDate)
+        );
 
         if (newDate >= totalTimeInSeconds) {
           endCurrentCycle();
@@ -54,10 +57,6 @@ export function Countdown() {
       return;
     }
     document.title = `Timer: ${formattedMinutes}:${formattedSeconds} restante(s)`;
-
-    return () => {
-      document.title = "Timer concluído";
-    };
   }, [activeCycle, formattedMinutes, formattedSeconds]);
 
   return (
